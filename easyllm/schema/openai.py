@@ -21,6 +21,7 @@ class ChatCompletionRequest(BaseModel):
     stream: bool = False
     frequency_penalty: Optional[float] = 1.0
     user: Optional[str] = None
+    best_of: int = 1
 
 
 class ChatCompletionResponseChoice(BaseModel):
@@ -72,6 +73,7 @@ class CompletionRequest(BaseModel):
     user: Optional[str] = None
     logprobs: bool = False
     echo: bool = False
+    best_of: int = 1
 
 
 class CompletionResponseChoice(BaseModel):
