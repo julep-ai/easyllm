@@ -189,9 +189,12 @@ You can also use existing prompt builders by importing them from easyllm.prompt_
             "stop_sequences": stop,
             "repetition_penalty": request.frequency_penalty,
             "top_k": request.top_k,
-            "seed": seed,
             "best_of": request.best_of,
         }
+
+        if request.best_of <= 1:
+            gen_kwargs.update({"seed": seed})
+
         if request.top_p == 0:
             gen_kwargs.pop("top_p")
         if request.top_p == 1:
@@ -385,9 +388,12 @@ You can also use existing prompt builders by importing them from easyllm.prompt_
             "stop_sequences": stop,
             "repetition_penalty": request.frequency_penalty,
             "top_k": request.top_k,
-            "seed": seed,
             "best_of": request.best_of,
         }
+
+        if request.best_of <= 1:
+            gen_kwargs.update({"seed": seed})
+
         if request.top_p == 0:
             gen_kwargs.pop("top_p")
         if request.top_p == 1:
