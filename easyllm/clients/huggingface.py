@@ -104,6 +104,7 @@ class ChatCompletion:
         frequency_penalty: Optional[float] = 1.0,
         debug: bool = False,
         best_of: int = 1,
+        prompt_builder: Union[str, callable] = prompt_builder,
     ) -> Dict[str, Any]:
         """
         Creates a new chat completion for the provided messages and parameters.
@@ -291,6 +292,7 @@ class Completion:
         echo: bool = False,
         debug: bool = False,
         best_of: int = 1,
+        prompt_builder: Union[str, callable] = prompt_builder,
     ) -> Dict[str, Any]:
         """
         Creates a new completion for the provided prompt and parameters.
