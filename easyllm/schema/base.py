@@ -14,7 +14,7 @@ def dump_object(object):
 
 class ChatMessage(BaseModel):
     role: Literal["user", "assistant", "function", "system", "situation", "thought", "information", "functions", "function_call"]
-    content: str
+    content: Optional[str] = None
     name: Optional[str] = None
 
 
