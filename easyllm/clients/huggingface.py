@@ -38,7 +38,7 @@ api_key = (
 )
 api_base = os.environ.get("HUGGINGFACE_API_BASE", None) or "https://api-inference.huggingface.co/models"
 api_version = os.environ.get("HUGGINGFACE_API_VERSION", None) or "2023-07-29"
-prompt_builder = os.environ.get("HUGGINGFACE_PROMPT", None)
+global_prompt_builder = os.environ.get("HUGGINGFACE_PROMPT", None)
 stop_sequences = []
 seed = 42
 
@@ -104,7 +104,7 @@ class ChatCompletion:
         frequency_penalty: Optional[float] = 1.0,
         debug: bool = False,
         best_of: int = 1,
-        prompt_builder: Union[str, callable] = prompt_builder,
+        prompt_builder: Union[str, callable, None] = None,
     ) -> Dict[str, Any]:
         """
         Creates a new chat completion for the provided messages and parameters.
@@ -142,6 +142,9 @@ class ChatCompletion:
             frequency_penalty=frequency_penalty,
             best_of=best_of,
         )
+
+        if prompt_builder is None:
+            prompt_builder = global_prompt_builder
 
         if prompt_builder is None:
             logger.warn(
@@ -292,7 +295,7 @@ class Completion:
         echo: bool = False,
         debug: bool = False,
         best_of: int = 1,
-        prompt_builder: Union[str, callable] = prompt_builder,
+        prompt_builder: Union[str, callable, None] = None,
     ) -> Dict[str, Any]:
         """
         Creates a new completion for the provided prompt and parameters.
@@ -341,6 +344,9 @@ class Completion:
         # include suffix if it exists
         if request.suffix is not None:
             request.prompt = request.prompt + request.suffix
+        
+        if prompt_builder is None:
+            prompt_builder = global_prompt_builder
 
         if prompt_builder is None:
             logging.warn(
